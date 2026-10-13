@@ -1,0 +1,11 @@
+#
+# Goodix touchscreen driver configuration
+#
+if TOUCHSCREEN_GOODIX_BRL
+
+config TOUCHSCREEN_GOODIX_BRL_SPI
+	bool "support SPI bus connection"
+	help
+		Say Y here if the touchscreen is connected via SPI bus.
+
+endif
