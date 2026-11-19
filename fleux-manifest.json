@@ -1,0 +1,196 @@
+{
+  "schema": 1,
+  "project": "daliboss/fleux",
+  "releases": [
+    {
+      "tag": "rsu",
+      "channel": "stable",
+      "buildId": 4,
+      "upstream": true,
+      "kernelVersion": "4.19.325-Fleux-V4",
+      "devices": [
+        "fleur",
+        "miel",
+        "fleur_p",
+        "miel_p"
+      ],
+      "assets": [
+        {
+          "name": "Fleux-V4.zip",
+          "size": 14533609,
+          "sha256": "fc1f3afdf370fefeeb9d7eb68c7511f575971537b4dca35ae62815acf174ddd8",
+          "kind": "anykernel3"
+        }
+      ]
+    },
+    {
+      "tag": "v5",
+      "channel": "stable",
+      "buildId": 5,
+      "upstream": true,
+      "kernelVersion": "4.19.325-Fleux-V5",
+      "devices": [
+        "fleur",
+        "miel",
+        "fleur_p",
+        "miel_p"
+      ],
+      "assets": [
+        {
+          "name": "Fleux-V5.zip",
+          "size": 14558753,
+          "sha256": "5b84f3597bc561c4ad34be331f6d12a33703bd7f84c2668af03249602eb1f6e8",
+          "kind": "anykernel3"
+        }
+      ]
+    },
+    {
+      "tag": "v6",
+      "channel": "stable",
+      "buildId": 6,
+      "upstream": true,
+      "kernelVersion": "4.19.325-Fleux-V6",
+      "devices": [
+        "fleur",
+        "miel",
+        "fleur_p",
+        "miel_p"
+      ],
+      "assets": [
+        {
+          "name": "Fleux-V6.zip",
+          "size": 14558174,
+          "sha256": "699cf379a3ee5c45f5ad64dce3b678e5171d6fd05989e863aef0d34aa7c90386",
+          "kind": "anykernel3"
+        }
+      ]
+    },
+    {
+      "tag": "v6-managerfix",
+      "channel": "stable",
+      "buildId": 6,
+      "upstream": true,
+      "kernelVersion": "4.19.325-Fleux-V6-SuSFS-HotFix-ManagerFix",
+      "devices": [
+        "fleur",
+        "miel",
+        "fleur_p",
+        "miel_p"
+      ],
+      "assets": [
+        {
+          "name": "Fleux-V6-ManagerFix.zip",
+          "size": 14551188,
+          "sha256": "be65dcf0baeb532ef8c0a50572801e71f1a661edd0d49ab74ec22dd9b6deacb4",
+          "kind": "anykernel3"
+        }
+      ]
+    },
+    {
+      "tag": "v6-susfs-hotfix",
+      "channel": "stable",
+      "buildId": 6,
+      "upstream": true,
+      "kernelVersion": "4.19.325-Fleux-V6-SuSFS-HotFix",
+      "devices": [
+        "fleur",
+        "miel",
+        "fleur_p",
+        "miel_p"
+      ],
+      "assets": [
+        {
+          "name": "Fleux-V6-SuSFS-HotFix.zip",
+          "size": 14566064,
+          "sha256": "a448ad7bb34bdff0a3ea03a60c1ab695c5f386e5411918f1f9ccb0d2de4d118a",
+          "kind": "anykernel3"
+        }
+      ]
+    },
+    {
+      "tag": "v7",
+      "channel": "stable",
+      "buildId": 7,
+      "upstream": true,
+      "kernelVersion": "4.19.325-Fleux-V7",
+      "devices": [
+        "fleur",
+        "miel",
+        "fleur_p",
+        "miel_p"
+      ],
+      "assets": [
+        {
+          "name": "Fleux-V7.zip",
+          "size": 14553173,
+          "sha256": "43ab32c04481de568fb316d72740edb91e5a9f4f64e065ebc2f4d8207e1e8f92",
+          "kind": "anykernel3"
+        }
+      ]
+    },
+    {
+      "tag": "v8",
+      "channel": "stable",
+      "buildId": 8,
+      "upstream": true,
+      "kernelVersion": "4.19.325-Fleux-V8",
+      "devices": [
+        "fleur",
+        "miel",
+        "fleur_p",
+        "miel_p"
+      ],
+      "assets": [
+        {
+          "name": "Fleux-V8.zip",
+          "size": 14582559,
+          "sha256": "0bd36a3222a94058a1c29c9064a200ccb55a0d9c0b9d0c8e6695df3fd5153fda",
+          "kind": "anykernel3"
+        }
+      ]
+    },
+    {
+      "tag": "v9",
+      "channel": "stable",
+      "buildId": 9,
+      "upstream": true,
+      "kernelVersion": "4.19.325-Fleux-V9",
+      "devices": [
+        "fleur",
+        "miel",
+        "fleur_p",
+        "miel_p"
+      ],
+      "assets": [
+        {
+          "name": "Fleux-V9.zip",
+          "size": 14584562,
+          "sha256": "b6a53a3974ad6e2bc8ca75c869b60081166f9c2167183e30aaed68a0da0af5a3",
+          "kind": "anykernel3"
+        }
+      ]
+    },
+    {
+      "tag": "v\u221e",
+      "channel": "stable",
+      "buildId": 10,
+      "upstream": true,
+      "kernelVersion": "4.19.325-Fleux-\u221e",
+      "devices": [
+        "fleur",
+        "miel",
+        "fleur_p",
+        "miel_p"
+      ],
+      "assets": [
+        {
+          "name": "Fleux-\u221e.zip",
+          "size": 14581142,
+          "sha256": "6e98549b90e3209e89e563214059c714aab44bbf5ca8132741862b46432395c4",
+          "kind": "anykernel3"
+        }
+      ]
+    }
+  ],
+  "generated": "2026-11-02"
+}
