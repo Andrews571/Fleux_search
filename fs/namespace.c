@@ -3903,6 +3903,10 @@ struct vfsmount *susfs_get_non_sus_vfsmnt_from_vfsmnt(struct vfsmount *vfsmnt) {
 		 *   without unbalancing the refcount. */
 		mntput(&mnt->mnt);
 		mntget(&real_mount(vfsmnt)->mnt);
+		/* - callers unconditionally dput() ->mnt_root, so hand them a
+		 *   referenced dentry as well (the fast paths above do the same). */
+		if (likely(!IS_ERR_OR_NULL(vfsmnt->mnt_root)))
+			dget(vfsmnt->mnt_root);
 		unlock_mount_hash();
 		return vfsmnt;
 	}

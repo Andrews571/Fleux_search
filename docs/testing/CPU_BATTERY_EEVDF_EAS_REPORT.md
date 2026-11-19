@@ -1,7 +1,7 @@
 # Fleux Kernel — CPU / Battery / EEVDF / EAS / GPU Optimization Report
 
 - **Project**: Fleux Kernel (`gitlab.com/daliboss/fleux`)
-- **Scope**: CPU, battery, EEVDF, EAS, GPU optimization for POCO M4 Pro 4G (`fleur`) / Redmi Note 11S 4G (`miel`), MT6781 / Helio G96, Linux **4.19.325** (ARM64)
+- **Scope**: CPU, battery, EEVDF, EAS, GPU optimization for Redmi Note 11S 4G (`fleur` / `miel`) / POCO M4 Pro 4G (`fleur_p` / `miel_p`), MT6781 / Helio G96, Linux **4.19.325** (ARM64)
 - **Branch**: `lineage-24.0` — all landed work now lives directly on the production branch
 - **Date**: 2026-10-11
 - **Status**: **EEVDF + uclamp are landed, pushed and runtime-confirmed**; the **GPU overclock (top OPP 1.00 GHz, measured clock ceiling ≈ 1.004 GHz) is built, flashed and runtime-confirmed**; **EAS is enabled and behaving as expected** (owner-accepted). The two GPU/version commits remain **local-only (not yet pushed)**. See §3.2, §6, §7.3, §8, §9, §12.

@@ -135,5 +135,10 @@ all.config
 # Other
 !drivers/input/touchscreen/mediatek/ft3418_i2c/include/firmware/fw_sample.i
 out/
+out-dbg/
 .*/
 !/.gitignore
+
+# Local Fleux build logs and generated helper binaries
+/build*.log
+/genheaders

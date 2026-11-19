@@ -4117,9 +4117,18 @@ static inline void update_misfit_status(struct task_struct *p, struct rq *rq) {}
 static void
 place_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
 {
-	u64 vslice = calc_delta_fair(se->slice, se);
+	u64 vslice;
 	u64 vruntime = avg_vruntime(cfs_rq);
 	s64 lag = 0;
+
+	/*
+	 * A group entity starts with slice == 0 (only task entities are
+	 * initialised in sched/core.c), which would give new groups a
+	 * zero-length first request.  Reset the slice here, as upstream
+	 * EEVDF does in place_entity().
+	 */
+	se->slice = sysctl_sched_min_granularity;
+	vslice = calc_delta_fair(se->slice, se);
 
 	/*
 	 * Due to how V is constructed as the weighted average of entities,
@@ -6725,6 +6734,7 @@ find_idle_cpu:
 }
 #endif /* CONFIG_MTK_SCHED_EXTENSION */
 
+#ifdef CONFIG_MTK_SCHED_EXTENSION
 #ifdef CONFIG_ARM64
 static void arch_get_cluster_cpus(struct cpumask *cpus, int cluster_id)
 {
@@ -6752,6 +6762,7 @@ static void arch_get_cluster_cpus(struct cpumask *cpus, int socket_id)
 	}
 }
 #endif
+#endif /* CONFIG_MTK_SCHED_EXTENSION */
 
 #ifdef CONFIG_MTK_SCHED_EXTENSION
 /* To find a CPU with max spare capacity in the same cluster with target */

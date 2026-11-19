@@ -51,6 +51,17 @@ module_param_named(enable, secretmem_enable, bool, 0400);
 MODULE_PARM_DESC(secretmem_enable,
 		 "Enable secretmem and memfd_secret(2) system call");
 
+/*
+ * Adapted from upstream 532b53cebe58 ("secretmem: disable memfd_secret()
+ * if arch cannot set direct map").  Without ARCH_HAS_SET_DIRECT_MAP the
+ * helpers in <linux/set_memory.h> are no-ops, so a 4.19 arm64 kernel would
+ * report success while the pages stay in the linear mapping.
+ */
+static inline bool secretmem_can_set_direct_map(void)
+{
+	return IS_ENABLED(CONFIG_ARCH_HAS_SET_DIRECT_MAP);
+}
+
 static atomic_t secretmem_users;
 
 bool secretmem_active(void)
@@ -87,13 +98,13 @@ retry:
 		__SetPageUptodate(page);
 		err = add_to_page_cache_lru(page, mapping, offset, gfp);
 		if (unlikely(err)) {
-			put_page(page);
 			/*
 			 * If a split of large page was required, it
 			 * already happened when we marked the page invalid
 			 * which guarantees that this call won't fail
 			 */
 			set_direct_map_default_noflush(page);
+			put_page(page);
 			if (err == -EEXIST)
 				goto retry;
 
@@ -209,7 +220,7 @@ SYSCALL_DEFINE1(memfd_secret, unsigned int, flags)
 	/* make sure local flags do not confict with global fcntl.h */
 	BUILD_BUG_ON(SECRETMEM_FLAGS_MASK & O_CLOEXEC);
 
-	if (!secretmem_enable)
+	if (!secretmem_enable || !secretmem_can_set_direct_map())
 		return -ENOSYS;
 
 	if (flags & ~(SECRETMEM_FLAGS_MASK | O_CLOEXEC))
@@ -257,7 +268,7 @@ static int __init secretmem_init(void)
 {
 	int ret = 0;
 
-	if (!secretmem_enable)
+	if (!secretmem_enable || !secretmem_can_set_direct_map())
 		return ret;
 
 	secretmem_mnt = kern_mount(&secretmem_fs);

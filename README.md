@@ -5,6 +5,7 @@
 ### A lean, modern, feature-packed kernel for the **POCO M4 Pro 4G** & **Redmi Note 11S 4G**
 
 [![Latest Release](https://img.shields.io/badge/Latest_Release-View-8957e5?style=for-the-badge)](https://gitlab.com/daliboss/fleux/-/releases)
+[![Fleux app](https://img.shields.io/badge/Fleux_App-Download-3ddc84?style=for-the-badge&logo=android&logoColor=white)](https://gitlab.com/daliboss/fleux-app)
 [![Linux](https://img.shields.io/badge/Linux-4.19.325-1f6feb?style=for-the-badge&logo=linux&logoColor=white)](https://kernel.org)
 [![Android](https://img.shields.io/badge/Android-13%E2%80%9317-3ddc84?style=for-the-badge&logo=android&logoColor=white)](#-device-support--compatibility)
 [![SoC](https://img.shields.io/badge/SoC-Helio_G96_%7C_MT6781-ff6b00?style=for-the-badge)](#-device-support--compatibility)
@@ -13,6 +14,7 @@
 **Modern EEVDF scheduler · smarter memory · GPU boost · hardened root**
 
 [📦 Releases](https://gitlab.com/daliboss/fleux/-/releases) ·
+[📲 Fleux App](https://gitlab.com/daliboss/fleux-app) ·
 [📜 Source](https://gitlab.com/daliboss/fleux/-/commits/lineage-24.0) ·
 [🐞 Issues](https://gitlab.com/daliboss/fleux/-/issues)
 
@@ -42,7 +44,7 @@ flowchart LR
     A --> F[⚙️ Scheduler & GPU]
 
     B --> B1[MGLRU]
-    B --> B2[ZRAM · LZ4]
+    B --> B2[ZRAM]
     B --> B3[KSM · BFQ]
     C --> C1[Baseband-guard]
     C --> C2[SELinux]
@@ -74,7 +76,8 @@ flowchart LR
 
 - **Multi-Gen LRU (MGLRU)** — smarter page reclaim so foreground apps survive
   memory pressure
-- **ZRAM** with **LZ4** compression
+- **ZRAM** — lzo by default; **LZ4**/LZ4HC/ZSTD are built in and selectable
+  from userspace
 - **KSM** — Kernel Samepage Merging
 - **BFQ** — Budget Fair Queueing I/O scheduler
 - **UCLAMP** — utilization clamping for better task placement
@@ -87,7 +90,7 @@ flowchart LR
 - **`clone3`** — with `CLONE_CLEAR_SIGHAND` & stack validation
 - **`io_uring`** — high-performance async I/O
 - **`openat2`** · **`faccessat2`**
-- **`memfd_secret`** · **`pidfd_getfd`** · **`waitid(P_PIDFD)`**
+- **`pidfd_getfd`** · **`waitid(P_PIDFD)`**
 - **PSI** · **fs-verity** · **EROFS** (with compression)
 
 </td>
@@ -145,15 +148,17 @@ flowchart LR
 ## 📱 Device Support & Compatibility
 
 | Device | Codename | SoC | Support |
-| :-- | :--: | :-- | :--: |
-| 🟠 **POCO M4 Pro 4G** | `fleur` | MediaTek Helio G96 (MT6781) | ✅ Primary |
-| 🔴 **Redmi Note 11S 4G** | `miel` | MediaTek Helio G96 (MT6781) | ✅ Supported |
+| :-- | :-- | :-- | :--: |
+| 🔴 **Redmi Note 11S 4G** — NFC | `fleur` | MediaTek Helio G96 (MT6781) | ✅ Supported |
+| 🔴 **Redmi Note 11S 4G** — non-NFC | `miel` | MediaTek Helio G96 (MT6781) | ✅ Supported |
+| 🟠 **POCO M4 Pro 4G** — NFC | `fleur_p` | MediaTek Helio G96 (MT6781) | ✅ Supported |
+| 🟠 **POCO M4 Pro 4G** — non-NFC | `miel_p` | MediaTek Helio G96 (MT6781) | ✅ Supported |
 
 - **Android:** 13 → 17 *(installer-enforced range)*
 - **Bootloader:** must be **unlocked**
 - **Slots:** **A/B** — the installer flashes the active slot and aborts safely if
   it can't be determined
-- **Safety:** installer verifies `fleur` / `miel` and aborts on any mismatch
+- **Safety:** installer verifies your device variant (`fleur` / `miel` / `fleur_p` / `miel_p`) and aborts on any mismatch
 
 ---
 
@@ -169,6 +174,31 @@ as flashable AnyKernel3 ZIPs — download the **latest**, or any previous versio
 
 ---
 
+## 📲 Flash it with the Fleux app
+
+The easiest way to install and update Fleux is the official **Fleux** app — no
+recovery, no adb, no manual ZIP juggling. Just open it and flash.
+
+- ⚡ **In-app flashing** — targets the active slot, or both
+- 🎯 **Auto-detects** your exact variant (`fleur` / `miel` / `fleur_p` / `miel_p`)
+- 🔄 **Built-in OTA updates** — always on the latest release
+- 🎨 Material You theming & a static accent color picker
+- 🌍 Clean, modern UI
+
+> 🔓 Requires root — **ReSukiSU** *(recommended)*, KernelSU, or Magisk.
+
+<div align="center">
+
+[![Download the Fleux app](https://img.shields.io/badge/⬇️_Download-Fleux_App-3ddc84?style=for-the-badge&logo=android&logoColor=white)](https://gitlab.com/daliboss/fleux-app/-/releases)
+[![Telegram](https://img.shields.io/badge/💬_Community-Telegram-229ED9?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/+16hDI7jZFuBiMTJk)
+
+</div>
+
+> Prefer the classic route? Grab the ZIP from the
+> [Releases page](https://gitlab.com/daliboss/fleux/-/releases) and flash it in your recovery.
+
+---
+
 ## 🔧 Installation
 
 > ⚠️ **Back up your `boot` partition first!**
@@ -178,7 +208,7 @@ as flashable AnyKernel3 ZIPs — download the **latest**, or any previous versio
 1. Download the **latest release ZIP** from the [Releases page](https://gitlab.com/daliboss/fleux/-/releases).
 2. Reboot into a custom recovery (TWRP / OrangeFox) **or** open a KernelSU/BakaSU manager.
 3. Flash the ZIP. The installer will:
-   - ✅ verify your device (`fleur` / `miel`)
+   - ✅ verify your device variant (`fleur` / `miel` / `fleur_p` / `miel_p`)
    - ✅ detect and target the **active A/B slot**
    - ✅ write **only the `boot` partition** *(`dtbo` / `vendor_boot` are untouched)*
 4. Reboot and confirm:
@@ -228,6 +258,29 @@ make -j$(nproc) O=out \
 
 ---
 
+## 🚀 Publishing a Release
+
+Bump `CONFIG_LOCALVERSION` in `arch/arm64/configs/fleur_defconfig` **in the same
+commit you tag** (for example `-Fleux-∞` for tag `v∞`), then build and run:
+
+```bash
+scripts/release.sh --tag v∞ --zip Fleux-∞.zip --build-id 10 \
+  --notes docs/releases/Fleux-∞.md --publish
+```
+
+The script merges the new entry into `fleux-manifest.json` (it no longer
+replaces previous releases) and refuses to publish when the built kernel
+release does not carry the tagged `LOCALVERSION`, or when a numeric tag such as
+`v10` does not match `-Fleux-V10`, or `v∞` does not match `-Fleux-∞`.  This
+is what the Fleux app uses to identify the running kernel, so a mismatch
+makes every device look out of date.
+
+Pass `--notes FILE` to publish a Markdown changelog with the release.  The app
+renders that description in its update screen.  The current notes live in
+`docs/releases/` and the full history is in `CHANGELOG.md`.
+
+---
+
 ## 🧪 Verification & Known Behavior
 
 Fleux is honest about what's proven:
@@ -235,15 +288,21 @@ Fleux is honest about what's proven:
 | ✅ Confirmed active | ⚠️ Available, not default | 🔬 Enabled, not benchmarked |
 | :-- | :-- | :-- |
 | MGLRU | **BFQ** (boot dev runs `mq-deadline`) | KFENCE |
-| ZRAM (LZ4) | **KSM** (`run = 0`) | EEVDF / EAS scheduling quality |
-| All backported syscalls | | Sustained GPU FPS & thermals @ 1.0 GHz |
+| ZRAM (lzo default; LZ4 optional) | **KSM** (`run = 0`) | EEVDF / EAS scheduling quality |
+| Backported syscalls (except `memfd_secret`) | | Sustained GPU FPS & thermals @ 1.0 GHz |
 | **EEVDF** scheduler · **uclamp** · **EAS** | | Battery / RAM gains |
 | **GPU top OPP 1.00 GHz** (locks, 0 asserts) | | |
 | BakaSU · SUSFS · NoMount · BBG | | |
 
 - 🔗 **Syscalls** are wired for ARM64 in `asm-generic/unistd.h` **and** present as
-  `__arm64_sys_*` in the running kernel.
-- 🧠 **MGLRU / KSM / ZRAM** are live via `/sys/kernel/mm/...` and `/sys/block/zram0`.
+  `__arm64_sys_*` in the running kernel — except `memfd_secret`, see below.
+- 🔐 **`memfd_secret`** is compiled in but deliberately returns **`-ENOSYS`**: it
+  needs `CONFIG_ARCH_HAS_SET_DIRECT_MAP`, and arm64 maps its linear map with
+  block (section) mappings, so a page alias cannot be removed safely.  This
+  matches upstream arm64 behaviour; the syscall is not advertised as usable.
+- 🧠 **MGLRU** is enabled by default (`CONFIG_LRU_GEN_ENABLED`); check
+  `/sys/kernel/mm/lru_gen/enabled`. **KSM** and **ZRAM** are live via
+  `/sys/kernel/mm/...` and `/sys/block/zram0`.
 - ⚙️ **EEVDF** is the live scheduler: `sched_latency_ns` / `sched_wakeup_granularity_ns`
   are gone and `sched_min_granularity_ns` is the base slice.
 - ⚡ **EAS** is active (`/proc/sys/kernel/sched_energy_aware = 1`) with the MTK
@@ -312,7 +371,7 @@ license tree. All upstream components remain under their original licenses.
 
 <div align="center">
 
-**⚡ Made with care for `fleur` & `miel`**
+**⚡ Made with care for `fleur` · `miel` · `fleur_p` · `miel_p`**
 
 *If Fleux makes your device better, drop a ⭐ on the repo!*
 
